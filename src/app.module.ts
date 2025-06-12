@@ -13,6 +13,9 @@ import { UserModule } from './modules/user/user.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { RoleModule } from './modules/role/role.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { DictController } from './modules/dict/dict/dict.controller';
+import { DictController } from './modules/dict/dict.controller';
+import { DictModule } from './modules/dict/dict.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { AuthModule } from './modules/auth/auth.module';
     AuthModule,
 
     SharedModule,
+
+    DictModule,
   ],
+  controllers: [DictController],
 })
 export class AppModule {}
