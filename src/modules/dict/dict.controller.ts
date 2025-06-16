@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, UseGuards } from '@nestjs/common';
 import { DictService } from './dict.service';
-import { CreateDictDto } from './dto';
-import { UpdateDictDto } from './dto';
+import { CreateDictTypeDto, UpdateDictTypeDto } from './dto';
+import { JwtGuard } from '@/common/guards';
 
 @Controller('dict')
+@UseGuards(JwtGuard)
 export class DictController {
   constructor(private readonly dictService: DictService) {}
 
-  @Post()
-  create(@Body() createDictDto: CreateDictDto) {
-    return this.dictService.create(createDictDto);
+  @Post('type')
+  createDictType(@Body() createDictTypeDto: CreateDictTypeDto) {
+    return this.dictService.createDictType(createDictTypeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.dictService.findAll();
+  @Get('type')
+  findAllDictType() {
+    return this.dictService.findAllDictType();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.dictService.findOne(id);
+  findOneDictType(@Param('id') id: number) {
+    return this.dictService.findOneDictType(id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() updateDictDto: UpdateDictDto) {
-    return this.dictService.update(id, updateDictDto);
+  @Patch(':id')
+  updateDictType(@Param('id') id: number, @Body() updateDictTypeDto: UpdateDictTypeDto) {
+    return this.dictService.updateDictType(id, updateDictTypeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.dictService.remove(id);
+  removeDictType(@Param('id') id: number) {
+    return this.dictService.removeDictType(id);
   }
 }

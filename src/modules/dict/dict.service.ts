@@ -1,30 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDictDto, UpdateDictDto } from '@/modules/dict/dto';
-import { Dict } from '@/modules/dict/dict.entity';
+import { CreateDictTypeDto, UpdateDictTypeDto } from '@/modules/dict/dto';
+import { DictType } from '@/modules/dict/dict-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class DictService {
-  @InjectRepository(Dict)
-  private dictRepository: Repository<Dict>;
-  create(createDictDto: CreateDictDto) {
-    return this.dictRepository.create(createDictDto);
+  @InjectRepository(DictType)
+  private dictTypeRepository: Repository<DictType>;
+  private dictDataRepository: Repository<DictType>;
+  createDictType(createDictTypeDto: CreateDictTypeDto) {
+    return this.dictTypeRepository.create(createDictTypeDto);
   }
 
-  findAll() {
-    return this.dictRepository.find();
+  findAllDictType() {
+    return this.dictTypeRepository.find();
   }
 
-  findOne(id: number) {
-    return this.dictRepository.findOne({ where: { id } });
+  findOneDictType(id: number) {
+    return this.dictTypeRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateDictDto: UpdateDictDto) {
-    return this.dictRepository.update(id, updateDictDto);
+  updateDictType(id: number, updateDictTypeDto: UpdateDictTypeDto) {
+    return this.dictTypeRepository.update(id, updateDictTypeDto);
   }
 
-  remove(id: number) {
-    return this.dictRepository.delete(id);
+  removeDictType(id: number) {
+    return this.dictTypeRepository.delete(id);
   }
 }
