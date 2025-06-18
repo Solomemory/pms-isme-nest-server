@@ -18,7 +18,7 @@ export class DictType extends CommonEntity {
   /**
    * 描述
    */
-  @Column()
+  @Column({ default: '' })
   description: string;
 
   /**

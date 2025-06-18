@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDictTypeDto, UpdateDictTypeDto } from '@/modules/dict/dto';
+import { CreateDictTypeDto, GetDictTypeDto, UpdateDictTypeDto } from '@/modules/dict/dto';
 import { DictType } from '@/modules/dict/dict-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class DictService {
@@ -10,11 +10,27 @@ export class DictService {
   private dictTypeRepository: Repository<DictType>;
   private dictDataRepository: Repository<DictType>;
   createDictType(createDictTypeDto: CreateDictTypeDto) {
-    return this.dictTypeRepository.create(createDictTypeDto);
+    console.log(createDictTypeDto);
+    return this.dictTypeRepository.save(createDictTypeDto);
   }
 
-  findAllDictType() {
-    return this.dictTypeRepository.find();
+  async findAllDictType(query: GetDictTypeDto) {
+    const pageSize = query.pageSize || 10;
+    const pageNo = query.pageNo || 1;
+    const [pageData, total] = await this.dictTypeRepository.findAndCount({
+      where: {
+        dictName: Like(`%${query.dictName || ''}%`),
+        enable: query.enable || undefined,
+      },
+      // relations: { dictData: true },
+      order: {
+        dictName: 'DESC',
+      },
+      take: pageSize,
+      skip: (pageNo - 1) * pageSize,
+    });
+
+    return { pageData, total };
   }
 
   findOneDictType(id: number) {

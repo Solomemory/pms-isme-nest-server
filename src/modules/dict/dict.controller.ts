@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+  UseGuards,
+  Query,
+} from '@nestjs/common';
 import { DictService } from './dict.service';
-import { CreateDictTypeDto, UpdateDictTypeDto } from './dto';
+import { CreateDictTypeDto, GetDictTypeDto, UpdateDictTypeDto } from './dto';
 import { JwtGuard } from '@/common/guards';
+import { GetRolesDto } from '@/modules/role/dto';
 
 @Controller('dict')
 @UseGuards(JwtGuard)
@@ -14,8 +25,8 @@ export class DictController {
   }
 
   @Get('type')
-  findAllDictType() {
-    return this.dictService.findAllDictType();
+  findAllDictType(@Query() query: GetDictTypeDto) {
+    return this.dictService.findAllDictType(query);
   }
 
   @Get(':id')

@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber, IsNotEmpty, IsBoolean } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsNotEmpty, IsBoolean, Allow } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateDictTypeDto {
@@ -19,23 +19,7 @@ export class CreateDictTypeDto {
   enable?: boolean;
 }
 
-export class UpdateDictTypeDto {
-  @IsString()
-  @IsOptional()
-  dictName?: string;
-
-  @IsString()
-  @IsOptional()
-  dictType?: string;
-
-  @IsString()
-  @IsOptional()
-  description?: string;
-
-  @IsBoolean()
-  @IsOptional()
-  enable?: boolean;
-}
+export class UpdateDictTypeDto extends PartialType(CreateDictTypeDto) {}
 
 export class CreateDictDataDto {
   @IsString()
@@ -64,3 +48,17 @@ export class CreateDictDataDto {
 }
 
 export class UpdateDictDataDto extends PartialType(CreateDictDataDto) {}
+
+export class GetDictTypeDto {
+  @Allow()
+  dictName: string;
+
+  @Allow()
+  enable?: boolean;
+
+  @Allow()
+  pageNo?: number;
+
+  @Allow()
+  pageSize?: number;
+}
