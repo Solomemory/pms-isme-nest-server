@@ -29,17 +29,17 @@ export class DictController {
     return this.dictService.findAllDictType(query);
   }
 
-  @Get(':id')
+  @Get('type/:id')
   findOneDictType(@Param('id') id: number) {
     return this.dictService.findOneDictType(id);
   }
 
-  @Patch(':id')
+  @Patch('type/:id')
   updateDictType(@Param('id') id: number, @Body() updateDictTypeDto: UpdateDictTypeDto) {
     return this.dictService.updateDictType(id, updateDictTypeDto);
   }
 
-  @Delete(':id')
+  @Delete('type/:id')
   removeDictType(@Param('id') id: number) {
     return this.dictService.removeDictType(id);
   }

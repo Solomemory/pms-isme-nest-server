@@ -10,7 +10,6 @@ export class DictService {
   private dictTypeRepository: Repository<DictType>;
   private dictDataRepository: Repository<DictType>;
   createDictType(createDictTypeDto: CreateDictTypeDto) {
-    console.log(createDictTypeDto);
     return this.dictTypeRepository.save(createDictTypeDto);
   }
 

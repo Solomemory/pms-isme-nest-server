@@ -1,5 +1,6 @@
 import { IsString, IsOptional, IsNumber, IsNotEmpty, IsBoolean, Allow } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
+import { Exclude } from 'class-transformer';
 
 export class CreateDictTypeDto {
   @IsString()
@@ -19,7 +20,10 @@ export class CreateDictTypeDto {
   enable?: boolean;
 }
 
-export class UpdateDictTypeDto extends PartialType(CreateDictTypeDto) {}
+export class UpdateDictTypeDto extends PartialType(CreateDictTypeDto) {
+  @Exclude()
+  id: number;
+}
 
 export class CreateDictDataDto {
   @IsString()
